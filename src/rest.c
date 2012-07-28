@@ -1,3 +1,21 @@
+/**
+ * This file is part of the twilio-c library.
+ *
+ * twilio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * twilio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with twilio.  If not, see <http://www.gnu.org/licenses/>.kh
+ *
+ */
+
 /*
  * =====================================================================================
  *
@@ -31,6 +49,7 @@ build_uri(char *resource) {
     sprintf(base, BASEURL, asid, atoken, resource); 
     char *uri = malloc(strlen(base)+strlen(asid)); 
     sprintf(uri, base, asid); 
+    /* Make sure you free the memory later after using this. */
     return uri;
 }
 
@@ -38,36 +57,18 @@ build_uri(char *resource) {
 void 
 post_sms(char *snd, char *rec, char *msg) {
     char *uri = build_uri(POST_SMS); 
-    curl_easy_setopt(handle, CURLOPT_URL, uri); 
-    printf(uri);
-    printf("\n"); 
-   /*  
-    twilio_post_t post; 
-    post.asid = asid; 
-    post.version = VERSION; 
-    post.body = msg; 
-    post.created = "null"; 
-    post.sent = "null";
-    post.updated = "null"; 
-    post.direction = "outbound-api"; 
-    post.from = snd;
-    post.price = "null"; 
-    post.sid = sid; 
-    post.status = "queued"; 
-    post.to = rec;
-    post.uri = uri; 
-    */
     char *bodybase = "From=%s&To=%s&Body=%s"; 
     char *buf = malloc(strlen(bodybase)+
             strlen(snd) + 
             strlen(rec) + 
             strlen(msg));
     sprintf(buf, bodybase, snd, rec, msg); 
-    printf("BUFFFERRR: "); 
-    printf(buf); 
-    printf("\n"); 
+   
+    /* Set the proper fields for posting. */
+    curl_easy_setopt(handle, CURLOPT_URL, uri); 
     curl_easy_setopt(handle, CURLOPT_POSTFIELDS, buf);  
     curl_easy_perform(handle); 
+    
     free(buf); 
     free(uri); 
 }

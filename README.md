@@ -5,4 +5,4 @@ Requirements
 ============
 
 - libcurl 
-
+- json-c-devel 

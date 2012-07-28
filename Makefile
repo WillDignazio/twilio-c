@@ -1,7 +1,7 @@
 CC=gcc 
 CFLAGS= -Wall -I/usr/include -I./include -L/usr/lib -L$(BIN) -lcurl
 LD=ld 
-BIN=./bin
+BIN=bin
 VERSION=1.0.1
 
 UTIL=$(wildcard ./util/*.c)
@@ -30,6 +30,15 @@ utilities:  link
 		echo "CC	$${util:0:-2}"; \
 		$(CC) $(CFLAGS) -ltwilio -o $${util:0:-2} $$util; \
 	done;
+
+devinstall: all
+	ln -sf $(CURDIR)/$(BIN)/libtwilio.so.$(VERSION) /usr/lib/libtwilio.so
+
+
+install: all
+	cp $(BIN)/libtwilio.$(VERSION) /usr/lib/
+	cp include/libtwilio.h /usr/lib/libtwilio.so.$(VERSION)
+	ln -s /usr/lib/libtwilio.so.$(VERSION) /usr/lib/libtwilio.so
 
 clean: 
 	rm -f ./*.o
