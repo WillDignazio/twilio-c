@@ -25,13 +25,13 @@
 
 #define OK 0
 
-#define BASEURL "https://api.twilio.com/2010-04-01"
+#define BASEURL "https://%s:%s@api.twilio.com%s"
 
 /*#############################################################################
  *#                           REST API MACROS                                 #
  *#############################################################################
  */
-#define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages"
+#define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages.json" //TODO: extension
 
 /*###########################################################################*/
 

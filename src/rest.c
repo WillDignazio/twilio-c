@@ -24,8 +24,13 @@
 /* Buils the entire resource uri for the twilio api function */
 char*
 build_uri(char *resource) {
-    char *uri = malloc(strlen(resource)+strlen(asid)); 
-    sprintf(uri, resource, asid); 
+    char *base = malloc(strlen(BASEURL)+
+            strlen(asid) + 
+            strlen(atoken) + 
+            strlen(resource)); 
+    sprintf(base, BASEURL, asid, atoken, resource); 
+    char *uri = malloc(strlen(base)+strlen(asid)); 
+    sprintf(uri, base, asid); 
     return uri;
 }
 
@@ -57,9 +62,13 @@ post_sms(char *snd, char *rec, char *msg) {
             strlen(snd) + 
             strlen(rec) + 
             strlen(msg));
-    sprintf(buf, snd, rec, msg); 
+    sprintf(buf, bodybase, snd, rec, msg); 
+    printf("BUFFFERRR: "); 
+    printf(buf); 
+    printf("\n"); 
     curl_easy_setopt(handle, CURLOPT_POSTFIELDS, buf);  
     curl_easy_perform(handle); 
     free(buf); 
+    free(uri); 
 }
 
