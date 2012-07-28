@@ -16,21 +16,24 @@
  * =====================================================================================
  */
 
+#include <curl/curl.h>
+
 #ifndef TWILIO_GAURD_H
 #define TWILIO_GARUD_H
 
 #define OK 0
 
-#define BASEURL "https://api.twilio.com/2010-04-01/%s"
+#define BASEURL "https://api.twilio.com/2010-04-01%s"
 
 /*#############################################################################
- *#                           REST API                                        #
+ *#                           REST API MACROS                                 #
  *#############################################################################
  */
 #define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages"
 
 /*###########################################################################*/
 
+extern CURL *handle; 
 extern char* asid; 
 extern char* atoken; 
 
@@ -41,5 +44,7 @@ typedef struct twilio_request_t {
 
 
 twilio_status init_twilio_api(char*, char*); 
+
+void post_sms(void); 
 
 #endif 

@@ -17,11 +17,25 @@
  */
 #include <stdlib.h>
 #include <stdio.h> 
+#include <string.h> 
 #include <curl/curl.h> 
 #include <twilio.h> 
 
+/* Buils the entire resource uri for the twilio api function */
+char*
+build_uri(char *resource) {
+    char *uri = malloc(strlen(BASEURL)+strlen(resource)+strlen(asid)); 
+    sprintf(uri, BASEURL, resource); 
+    sprintf(uri, uri, asid); 
+    return uri;
+}
+
+/* POST message to send a sms message to the desired recpient */
 void 
-post_sms(void) { 
-    
+post_sms(void) {
+    char *uri = build_uri(POST_SMS); 
+    curl_easy_setopt(handle, CURLOPT_URL, uri); 
+    printf(uri);
+    printf("\n"); 
 }
 
