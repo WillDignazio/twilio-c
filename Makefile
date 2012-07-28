@@ -1,5 +1,5 @@
 CC=gcc 
-CFLAGS=-I/usr/include -lcurl
+CFLAGS=-I/usr/include -L/usr/lib -lcurl
 LD=ld 
 
 UTIL=$(wildcard ./util/*.c)
@@ -9,8 +9,12 @@ UTIL=$(wildcard ./util/*.c)
 all: utilities
 
 utilities: 
-	@echo "TEST" 
 	@for util in $(UTIL); do \
-		echo "CC	$${util:0:-2}.o"; \
-		$(CC) $(CFLAGS) -o $${util:0:-2}.o -c $$util; \
+		echo "CC	$${util:0:-2}"; \
+		$(CC) $(CFLAGS) -o $${util:0:-2} $$util; \
 	done;
+
+clean: 
+	rm -f ./*.o
+	rm -f ./util/*.o
+	rm -f ./util/curltest
