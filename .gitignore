@@ -1,3 +1,5 @@
 *.o
 *.swp
 curltest
+libtwilio.so.*
+util/libtest*

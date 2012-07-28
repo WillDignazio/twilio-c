@@ -19,6 +19,15 @@
 #ifndef TWILIO_GAURD_H
 #define TWILIO_GARUD_H
 
+#define OK 0
 
+
+typedef int twilio_status; 
+
+typedef struct twilio_request_t { 
+} twilio_request_t;  
+
+
+twilio_status init_twilio_api(const char*, const char*); 
 
 #endif 

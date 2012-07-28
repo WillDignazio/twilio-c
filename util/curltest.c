@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     printf(curl_version()); 
 
     /* Initialize curl, args is flags */
-    CURLcode c = curl_global_init(CURL_GLOBAL_NOTHING);
+    curl_global_init(CURL_GLOBAL_NOTHING);
     CURL *handle = curl_easy_init(); 
     curl_easy_setopt(handle, CURLOPT_VERBOSE, 1); 
     curl_easy_setopt(handle, CURLOPT_URL, "http://www.google.com/"); 
