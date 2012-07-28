@@ -31,17 +31,19 @@
  *#                           REST API MACROS                                 #
  *#############################################################################
  */
-#define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages.json" //TODO: extension
+
+/* TODO: Allow seperate extension, xml is the alternative */
+#define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages.json" 
 
 /*###########################################################################*/
 
-extern CURL *handle; 
+extern CURL *handle; //Instance curl handler
 extern char* asid; //Account sid
-extern char* atoken; 
+extern char* atoken; //Acount token
 
 typedef int twilio_status; 
 
-typedef struct twilio_post_t { 
+typedef struct twilio_sms_return_t { 
     char *asid; 
     char *version; 
     char *body; 
