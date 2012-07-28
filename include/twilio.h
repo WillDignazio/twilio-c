@@ -21,6 +21,18 @@
 
 #define OK 0
 
+#define BASEURL "https://api.twilio.com/2010-04-01/%s"
+
+/*#############################################################################
+ *#                           REST API                                        #
+ *#############################################################################
+ */
+#define POST_SMS "/2010-04-01/Accounts/%s/SMS/Messages"
+
+/*###########################################################################*/
+
+extern char* asid; 
+extern char* atoken; 
 
 typedef int twilio_status; 
 
@@ -28,6 +40,6 @@ typedef struct twilio_request_t {
 } twilio_request_t;  
 
 
-twilio_status init_twilio_api(const char*, const char*); 
+twilio_status init_twilio_api(char*, char*); 
 
 #endif 

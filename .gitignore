@@ -3,3 +3,4 @@
 curltest
 libtwilio.so.*
 util/libtest*
+bin/

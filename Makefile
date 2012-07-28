@@ -1,7 +1,7 @@
 CC=gcc 
-CFLAGS= -Wall -I/usr/include -I./include -L/usr/lib -L./ -lcurl
+CFLAGS= -Wall -I/usr/include -I./include -L/usr/lib -L$(BIN) -lcurl
 LD=ld 
-
+BIN=./bin
 VERSION=1.0.1
 
 UTIL=$(wildcard ./util/*.c)
@@ -13,8 +13,10 @@ OBJ=$(wildcard ./src/*.o)
 all: link
 
 link: lib
+	@mkdir -p $(BIN)
 	@$(CC) -shared -Wl,-soname,libtwilio.so \
-		-o libtwilio.so.$(VERSION) $(OBJ)
+		-o $(BIN)/libtwilio.so.$(VERSION) $(OBJ)
+	ln -sf libtwilio.so.$(VERSION) $(BIN)/libtwilio.so
 	@echo "CC	libtwilio.so"
 
 lib: 
@@ -26,7 +28,7 @@ lib:
 utilities:  link 
 	@for util in $(UTIL); do \
 		echo "CC	$${util:0:-2}"; \
-		$(CC) $(CFLAGS) -o $${util:0:-2} -ltwilio $$util; \
+		$(CC) $(CFLAGS) -ltwilio -o $${util:0:-2} $$util; \
 	done;
 
 clean: 
@@ -35,3 +37,4 @@ clean:
 	rm -f ./util/*.o
 	rm -f ./util/curltest
 	rm -f ./libtwilio.so*
+	rm -rf $(BIN)

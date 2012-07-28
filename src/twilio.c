@@ -17,18 +17,30 @@
  */
 #include <stdlib.h>
 #include <stdio.h> 
+#include <string.h> 
 #include <curl/curl.h> 
 #include <twilio.h>
 
 CURL *handle;
+CURLcode res; 
+
+char *asid; //Acount SID
+char *atoken; // Account Token 
 
 twilio_status
-init_twilio_api(const char * asid, const char *token) { 
-
-    curl_global_init(CURL_GLOBAL_NOTHING); 
+init_twilio_api(char *id, char *token) { 
+    curl_global_init(CURL_GLOBAL_SSL); 
     handle = curl_easy_init(); 
+  
+    /* Set account login/auth data */
+    asid = id; 
+    atoken = token; 
+
     if(handle) { 
         curl_easy_setopt(handle, CURLOPT_VERBOSE, 1); 
+        /* They have a cert verified by Equifax */
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1); 
+
     } else { 
         printf("Unable to create curl handle"); 
         exit(1); 
