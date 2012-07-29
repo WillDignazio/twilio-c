@@ -53,8 +53,6 @@ build_uri(char *resource) {
     return uri;
 }
 
-/* POST shortcode message to an application based on sid */
-
 /* POST message to send a sms message to the desired recpient */
 void 
 post_sms(char *snd, char *rec, char *msg) {

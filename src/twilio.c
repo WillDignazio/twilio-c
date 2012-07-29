@@ -45,6 +45,11 @@ CURLcode res;
 char *asid; //Acount SID
 char *atoken; // Account Token 
 
+/* Should be the first function you call when you 
+ * use this library. Initializes an instance of the 
+ * variables required to communicate with the 
+ * twilio API. 
+ */
 twilio_status
 init_twilio_api(char *accountsid, char *token) { 
     curl_global_init(CURL_GLOBAL_SSL); 
@@ -59,7 +64,6 @@ init_twilio_api(char *accountsid, char *token) {
     printf("\n"); 
 
     if(handle) { 
-        curl_easy_setopt(handle, CURLOPT_VERBOSE, 1); 
         /* They have a cert verified by Equifax */
         curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1); 
         //curl_easy_setopt(handle, CURLOPT_URL, BASEURL); 
