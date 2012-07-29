@@ -27,8 +27,8 @@ lib:
 
 utilities:  link 
 	@for util in $(UTIL); do \
-		echo "CC	$${util:0:-2}"; \
-		$(CC) $(CFLAGS) -ltwilio -o $${util:0:-2} $$util; \
+		echo "CC	$(BIN)/$${util:7:-2}"; \
+		$(CC) $(CFLAGS) -ltwilio -o $(BIN)/$${util:7:-2} $$util; \
 	done;
 
 devinstall: all
