@@ -22,6 +22,8 @@
 #include <stdio.h> 
 #include <string.h> 
 
+/* Calculates the size of the html encoded string counterpart to
+ * the string passed into the arguments. */
 int
 html_encoded_size(char *in) { 
   	int sz=0; 
@@ -78,14 +80,13 @@ html_encoded_size(char *in) {
 	return sz; 
 }
 
-
+/* Encodes a C string into an html encoded string. */
 void 
 html_encode(char *str, char **out) { 
   	int offset = 0;
   	int i; 
 	char buf[strlen(str)+1]; 
 	strcpy(buf, str); 
-	int sz = html_encoded_size(str);
 	*out = malloc(html_encoded_size(str));
 	for(i=0; i<strlen(buf); i++) { 
 	  	switch(buf[i]) { 
