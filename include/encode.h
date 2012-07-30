@@ -20,7 +20,7 @@
 #define ENCODE_GAURD_H 
 
 int html_encoded_size(char*); 
-void html_enocode(char*, char**); 
+void html_encode(char*, char**); 
 
 #endif 
 

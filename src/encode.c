@@ -81,62 +81,79 @@ html_encoded_size(char *in) {
 
 void 
 html_encode(char *str, char **out) { 
+  	int offset = 0;
   	int i; 
-	char *buf = (char*)malloc(strlen(str)); 
+	char buf[strlen(str)+1]; 
 	strcpy(buf, str); 
+	int sz = html_encoded_size(str);
 	*out = malloc(html_encoded_size(str));
 	for(i=0; i<strlen(buf); i++) { 
 	  	switch(buf[i]) { 
 		  	case ';':
 			  	strcat(*out, "%3B"); 
+				offset+=2;
 				break; 
 			case '?': 
 				strcat(*out, "%3F"); 
+				offset+=2;
 				break; 
 			case '/': 
 				strcat(*out, "%2F");
+				offset+=2;
 				break; 
 			case ':': 
 				strcat(*out, "%3A"); 
+				offset+=2; 
 				break; 
 			case '#': 
 				strcat(*out, "%23"); 
+				offset+=2; 
 				break; 
 			case '&': 
 				strcat(*out, "%26"); 
+				offset+=2; 
 				break; 
 			case '=': 
 				strcat(*out, "%3D");
+				offset+=2; 
 				break; 
 			case '+': 
 				strcat(*out, "%2B"); 
+				offset+=2; 
 				break; 
 			case '$': 
 				strcat(*out, "%24"); 
+				offset+=2; 
 				break; 
 			case ',': 
 				strcat(*out, "%2C"); 
+				offset+=2; 
 				break; 
 			case ' ': 
 				strcat(*out, "+"); 
 				break; 
 			case '%': 
 				strcat(*out, "%25"); 
+				offset+=2; 
 				break; 
 			case '<': 
 				strcat(*out, "%3C"); 
+				offset+=2; 
 				break;
 			case '>': 
 				strcat(*out, "%3E"); 
+				offset+=2; 
 				break; 
 			case '~': 
 				strcat(*out, "%7E"); 
+				offset+=2; 
 				break; 
 			case '!': 
 				strcat(*out, "%21"); 
+				offset+=2;
 				break; 
 			default: 
-				(*out)[i] = buf[i];
+				(*out)[offset+i] = buf[i];
 		}
 	}
 }

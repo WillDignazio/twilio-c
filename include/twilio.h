@@ -16,10 +16,12 @@
  * =====================================================================================
  */
 
-#include <curl/curl.h>
 
 #ifndef TWILIO_GAURD_H
 #define TWILIO_GARUD_H
+
+#include <encode.h>
+#include <curl/curl.h>
 
 #define VERSION "2010-04-01"; 
 

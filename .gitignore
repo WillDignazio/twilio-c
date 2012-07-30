@@ -6,3 +6,4 @@ util/libtest*
 util/sms*
 bin/
 *.*~
+*.smsrc
