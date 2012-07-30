@@ -26,6 +26,9 @@ int main(int argc, char *argv[]) {
 		char *c; 
 		html_encode(argv[1], &c); 
 		printf("After html_encode: %s\n", c); 
+		char *d; 
+		html_encode(argv[1], &d); 
+		printf("Repetitive html_enocode test: %s\n", d);
 	}
 	return 0; 
 }

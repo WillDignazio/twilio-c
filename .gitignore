@@ -3,7 +3,6 @@
 curltest
 libtwilio.so.*
 util/libtest*
-util/sms*
 bin/
 *.*~
 *.smsrc
