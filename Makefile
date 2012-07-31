@@ -33,12 +33,15 @@ utilities:  link
 
 devinstall: all
 	ln -sf $(CURDIR)/$(BIN)/libtwilio.so.$(VERSION) /usr/lib/libtwilio.so
+	ln -sf $(CURDIR)/include/twilio.h /usr/include/twilio.h
+	ln -sf $(CURDIR)/include/encode.h /usr/include/encode.h
 
 
 install: all
 	cp $(BIN)/libtwilio.$(VERSION) /usr/lib/
-	cp include/libtwilio.h /usr/lib/libtwilio.so.$(VERSION)
-	ln -s /usr/lib/libtwilio.so.$(VERSION) /usr/lib/libtwilio.so
+	cp include/twilio.h /usr/include
+	cp include/encode.h /usr/include
+	ln -sf /usr/lib/libtwilio.so.$(VERSION) /usr/lib/libtwilio.so
 
 clean: 
 	rm -f ./*.o
