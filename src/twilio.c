@@ -57,11 +57,7 @@ init_twilio_api(char *accountsid, char *token) {
   
     /* Set account login/auth data */
     asid = accountsid; 
-    printf(asid);
-    printf("\n"); 
     atoken = token; 
-    printf(token); 
-    printf("\n"); 
 
     if(handle) { 
         /* They have a cert verified by Equifax */

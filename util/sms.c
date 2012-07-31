@@ -40,74 +40,85 @@
 #include <pwd.h> 
 #include <twilio.h> 
 
+/* This is a simple sms utility for sending out text messages 
+ * through the command line. You need to have a file in your 
+ * home directory with three lines, one for sid, token, and 
+ * sending phone number, in that order. The text will be 
+ * charged from your twilio account. 
+ */
 int main(int argc, char *argv[]) { 
-	
-  	/* I'd prefer it if you didn't have to type in your sid and token 
-	 * every time you wanted to send an sms, so you should be able to 
-	 * read it into from file. */
-  	char *path = malloc(strlen(getpwuid(getuid())->pw_dir) + strlen(".smsrc")); 
-	sprintf(path, "%s/%s", getpwuid(getuid())->pw_dir, ".smsrc"); 
+
+	char *sid; 
+	char *token;
+	char *from_number; 
+
+  	struct passwd *pw = getpwuid(getuid());
+	char path[strlen(pw->pw_dir)+strlen("/.smsrc")]; 
+	sprintf(path, "%s%s", pw->pw_dir, "/.smsrc"); 
 	FILE *fp = fopen(path, "r"); 
-	char rec[30]; 
-	char txt[160];
-	char sid[50]; 
-	char token[50]; 
-	char num[50]; 
-	char *lnptr;
-	char *enc; 
-	char *enc2; 
-	char *enc3;
 
-	if(!fp) {
-	  	printf("Could not find sid/token config.\n"); 
-		//TODO: Write in manual sid/token input
-		exit(1);
-	} else { 
-	  	/* All you need to do is have the first line of the rc 
-		 * file as your sid, the second as your token, and 
-		 * the third as your from phone number*/
-	  	
-		fgets(sid, sizeof(sid), fp);
-		lnptr = strchr(sid, '\n'); 
-		if(lnptr) { *lnptr = '\0'; }	
-		printf("sid: %s\n", sid);
-
-		fgets(token, sizeof(token), fp); 
-		lnptr = strchr(token, '\n');
-		if(lnptr) { *lnptr = '\0'; }
-		printf("token: %s\n", token); 
-		
-		fgets(num, sizeof(num), fp); 
-		lnptr = strchr(num, '\n'); 
-		if(lnptr) { *lnptr = '\0'; }
-		printf("number: %s\n", num);
-
-		html_encode(num, &enc); 
-		printf("Encoded from number: %s\n", enc);
-
-		printf("To: "); 
-		char *buf = strchr(rec, '\n'); 
-		if(fgets(rec, sizeof(rec), stdin)) { 
-			if(buf) 
-				*buf = '\0'; 
+	char buffer[50]; 
+	int stage; 
+	for(stage=0; fgets(buffer, 80, fp); stage++) { 
+	  	char *newseek; 
+	  	switch(stage) { 
+		  	case 0: // SID
+			  	sid = malloc(strlen(buffer));
+				sprintf(sid, "%s", buffer);
+				newseek = strchr(sid, '\n'); 
+				if(newseek != NULL) { *newseek = '\0'; }
+				printf("Read sid: %s\n", sid);
+				break; 
+			case 1: // Token
+				token = malloc(strlen(buffer)); 
+				sprintf(token, "%s", buffer); 
+				newseek = strchr(token, '\n'); 
+				if(newseek != NULL) { *newseek = '\0'; }
+				printf("Read token: %s\n", token); 
+				break;
+			case 2: // Sending phone number
+				from_number = malloc(strlen(buffer)); 
+				sprintf(from_number, "%s", buffer);
+				while((newseek = strchr(from_number, '\n'))) { 
+					if(newseek == NULL) { *(newseek) = 'A'; }
+				}
+				printf("Read number: %s", buffer); 
+				break;
 		}
-		html_encode(buf, &enc2);
-
-		printf("Text: ");
-		char *buf2 = strchr(txt, '\n');
-		if(fgets(txt, sizeof(txt), stdin)) {
-		  	if(buf2) 
-			  *buf2 = '\0';
-		}
-		html_encode(buf2, &enc3);
-	
-		/* Now we can actually use the API */
-		init_twilio_api(sid, token);
-		printf("Sending to: %s\n", enc2);
-		printf("Sending from: %s\n", enc);
-		post_sms(enc, enc2, enc3);
 	}
-  	
+	
+  	init_twilio_api(sid, token); 
+
+	char number[20]; 
+	printf("To: "); 
+	fflush(stdout); 
+	if(fgets(number, sizeof(number), stdin) != NULL) { 
+		char *newline = strchr(number, '\n'); 
+		if(newline != NULL) { 
+			*newline = '\0'; 
+		}
+	}
+
+	char text[160]; 
+	printf("Text: "); 
+	if(fgets(text, sizeof(text), stdin) != NULL) { 
+		char *newline = strchr(text, '\n'); 
+		if(newline != NULL) { 
+			*newline = '\0'; 
+		}
+	}
+
+	char *number_encoded; 
+	html_encode(number, &number_encoded); 
+
+	char *out; 
+	html_encode("NUMBER", &out); 
+
+	char *encoded_text; 
+	html_encode(text, &encoded_text); 
+
+	post_sms(out, number, encoded_text);
+
     return 0; 
 }
 
