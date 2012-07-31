@@ -5,4 +5,5 @@ libtwilio.so.*
 util/libtest*
 bin/
 *.*~
+*~
 *.smsrc

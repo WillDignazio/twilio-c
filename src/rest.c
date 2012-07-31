@@ -1,12 +1,14 @@
 /**
+ * Copyright 2012, William Dignazio
+ *
  * This file is part of the twilio-c library.
  *
- * twilio is free software: you can redistribute it and/or modify
+ * twilio-c is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * twilio is distributed in the hope that it will be useful,
+ * twilio-c is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -21,7 +23,7 @@
  *
  *       Filename:  rest.c
  *
- *    Description:  Rest api functions for twilio c libraries. 
+ *    Description:  Rest api functions for the twilio-c libraries. 
  *
  *        Version:  1.0
  *        Created:  07/28/2012 04:26:45 PM
