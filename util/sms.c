@@ -65,33 +65,35 @@ int main(int argc, char *argv[]) {
 		  	case 0: // SID
 			  	sid = malloc(strlen(buffer));
 				sprintf(sid, "%s", buffer);
-				newseek = strchr(sid, '\n'); 
-				if(newseek != NULL) { *newseek = '\0'; }
-				printf("Read sid: %s\n", sid);
+				if((newseek = strchr(sid, '\n')))
+				  	*newseek = '\0';
+				//printf("Read sid: %s\n", sid);
 				break; 
 			case 1: // Token
+
 				token = malloc(strlen(buffer)); 
 				sprintf(token, "%s", buffer); 
-				newseek = strchr(token, '\n'); 
-				if(newseek != NULL) { *newseek = '\0'; }
-				printf("Read token: %s\n", token); 
+				if((newseek = strchr(token, '\n')))
+				  	*newseek = '\0';
+				//printf("Read token: %s\n", token); 
 				break;
 			case 2: // Sending phone number
 				from_number = malloc(strlen(buffer)); 
 				sprintf(from_number, "%s", buffer);
-				while((newseek = strchr(from_number, '\n'))) { 
-					if(newseek == NULL) { *(newseek) = 'A'; }
-				}
-				printf("Read number: %s", buffer); 
+				if((newseek = strchr(from_number, '\n')))
+				  	*newseek = '\0'; 
+				//printf("Read number: %s\n", buffer); 
 				break;
 		}
+		/* Zero out the buffer for the next run. */ 
+		bzero(buffer, sizeof(buffer)); 
 	}
-	
+
+	/* Initialize the C twilio library */
   	init_twilio_api(sid, token); 
 
 	char number[20]; 
 	printf("To: "); 
-	fflush(stdout); 
 	if(fgets(number, sizeof(number), stdin) != NULL) { 
 		char *newline = strchr(number, '\n'); 
 		if(newline != NULL) { 
@@ -108,16 +110,24 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	/* Twilio only accepts encoded numbers, maybe later 
+	 * I will make an encoded number a structure itself. 
+	 * That way you'd have to TRY to screw up your 
+	 * numbers. 
+	 */
 	char *number_encoded; 
 	html_encode(number, &number_encoded); 
+	//printf("Encoded To Number: %s\n", number_encoded); 
 
-	char *out; 
-	html_encode("NUMBER", &out); 
+	char *from_encoded; 
+	html_encode(from_number, &from_encoded); 
+	//printf("From Encoded: %s\n", from_encoded); 
 
 	char *encoded_text; 
 	html_encode(text, &encoded_text); 
+	//printf("Text Encoded: %s\n", encoded_text); 
 
-	post_sms(out, number, encoded_text);
+	post_sms(from_encoded, number_encoded, encoded_text);
 
     return 0; 
 }
