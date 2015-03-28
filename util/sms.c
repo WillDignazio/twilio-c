@@ -58,6 +58,11 @@ int main(int argc, char *argv[]) {
 	char path[strlen(pw->pw_dir)+strlen("/.smsrc")]; 
 	sprintf(path, "%s%s", pw->pw_dir, "/.smsrc"); 
 	FILE *fp = fopen(path, "r"); 
+    if ( fp == NULL )
+    {
+        printf("Could not open %s", path);
+        return 1;
+    }
 
 	char buffer[50]; 
 	int stage; 
