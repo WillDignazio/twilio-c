@@ -1,5 +1,6 @@
+*.a
 *.o
-*.swp
+*.sw[op]
 curltest
 libtwilio.so.*
 util/libtest*
@@ -8,3 +9,9 @@ bin/
 *~
 *.smsrc
 build/
+
+#make/cmake
+*cmake_install.cmake
+CMakeFiles/*
+*CMakeCache.txt
+*Makefile

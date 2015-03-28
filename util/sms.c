@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 	  	char *newseek; 
 	  	switch(stage) { 
 		  	case 0: // SID
-			  	sid = malloc(strlen(buffer));
+			  	sid = malloc(strlen(buffer) + 1);
 				sprintf(sid, "%s", buffer);
 				if((newseek = strchr(sid, '\n')))
 				  	*newseek = '\0';
@@ -78,14 +78,14 @@ int main(int argc, char *argv[]) {
 				break; 
 			case 1: // Token
 
-				token = malloc(strlen(buffer)); 
+				token = malloc(strlen(buffer) + 1); 
 				sprintf(token, "%s", buffer); 
 				if((newseek = strchr(token, '\n')))
 				  	*newseek = '\0';
 				//printf("Read token: %s\n", token); 
 				break;
 			case 2: // Sending phone number
-				from_number = malloc(strlen(buffer)); 
+				from_number = malloc(strlen(buffer) + 1); 
 				sprintf(from_number, "%s", buffer);
 				if((newseek = strchr(from_number, '\n')))
 				  	*newseek = '\0'; 
@@ -135,6 +135,9 @@ int main(int argc, char *argv[]) {
 	//printf("Text Encoded: %s\n", encoded_text); 
 
 	post_sms(from_encoded, number_encoded, encoded_text);
+    free(sid);
+    free(token);
+    free(from_number);
 
     return 0; 
 }
