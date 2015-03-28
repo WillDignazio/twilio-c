@@ -1,19 +1,5 @@
 /*
- * =====================================================================================
- *
- *       Filename:  encodetest.c
- *
- *    Description:  Encoding test app
- *
- *        Version:  1.0
- *        Created:  07/29/2012 08:08:03 PM
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  William Dignazio (slackwill), slackwill@csh.rit.edu
- *   Organization:  
- *
- * =====================================================================================
+ * Copyright (c) 2015, Will Dignazio
  */
 #include <stdlib.h>
 #include <twilio.h> 
