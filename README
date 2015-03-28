@@ -1,0 +1,55 @@
+		       Twilio C Helper Library
+
+What is it?
+-----------
+
+The Twilio C (twilio-c) helper library's goal is to provide a lightweight,
+simple, and functional C API implementation for the Twilio service.
+
+
+Latest Version
+--------------
+
+The latest version of the twilio-c library can be found on GitHub,
+under https://github.com/WillDignazio/twilio-c/. From this URL, one
+should be able to directly clone the library, and submit changes/pull
+requests.
+
+
+Building
+--------
+
+The twilioc library depends on a couple libaries or programs, for the
+most part, this is the libcurl library for performing HTTP(S) requests
+to the twilio server.
+
+	Dependencies
+	------------
+	- C compiler (gcc, clang, etc)
+	- libcurl
+	- cmake (>= 2.8)
+	
+	Compiling
+	---------
+	$ mkdir build/
+	$ cd    build/
+	$ cmake ..
+	$ make
+
+Licensing
+---------
+
+This library is under the MIT License.
+
+See the file called LICENSE for more detail.
+
+
+Contacts
+--------
+
+	* To submit bug fixes, new features, or comments directly
+          pertaining to code, use the GitHub source page at
+          https://github.com/WillDignazio/twilio-c/
+
+	* For general questions, code or otherwise, you can ping me
+	  at wdignazio at gmail dot com.
