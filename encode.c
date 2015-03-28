@@ -1,6 +1,7 @@
 /**
  * Copyright 2015, William Dignazio
  */
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h> 
 #include <string.h> 
@@ -9,8 +10,8 @@
  * the string passed into the arguments. */
 int
 html_encoded_size(char *in) { 
-  	int sz=0; 
-	int i; 
+        size_t sz=0; 
+	size_t i; 
 	for(i=0; i<strlen(in); i++) { 
 	  	switch(in[i]) { 
 			case ';': 
@@ -66,8 +67,8 @@ html_encoded_size(char *in) {
 /* Encodes a C string into an html encoded string. */
 void 
 html_encode(char *str, char **out) { 
-  	int offset = 0;
-  	int i; 
+  	size_t offset = 0;
+  	size_t i; 
 	char buf[strlen(str)+1]; 
 	strcpy(buf, str); 
 	*out = malloc(html_encoded_size(str));
